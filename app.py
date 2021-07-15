@@ -6,8 +6,16 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver import ActionChains
 from random import randint
+from tkgui import runGUI
+import tkinter as tk
 import time
 import datetime
+
+returnValues = runGUI()
+
+print(returnValues)
+
+quit()
 
 clearConsole = lambda: print('\n' * 150)
 
