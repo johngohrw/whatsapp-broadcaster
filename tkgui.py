@@ -2,8 +2,6 @@
 import tkinter as tk
 import math
 
-
-
 phones = ''
 message = '' 
 interval = ''
