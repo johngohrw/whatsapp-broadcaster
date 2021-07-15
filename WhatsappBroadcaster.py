@@ -8,10 +8,13 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver import ActionChains
 from random import randint
 from tkgui import runGUI
-from utils import RepresentsInt, clearConsole, isValidNumber, stripNonNumeric
+from utils import RepresentsInt, clearConsole, isValidNumber, stripNonNumeric, printArt
 import tkinter as tk
 import time
 import datetime
+
+printArt()
+print("Follow the instructions on the other window")
 
 returnValues = runGUI()
 phones = returnValues["phones"].split('\n')

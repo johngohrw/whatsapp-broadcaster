@@ -94,6 +94,9 @@ def runGUI():
 
     window.mainloop()
 
+    if (len(phones) == 0 or len(message) == 0):
+        quit()
+
     return {"phones": phones, "message": message, "interval": interval}
 
 
