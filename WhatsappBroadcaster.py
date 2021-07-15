@@ -14,7 +14,10 @@ import time
 import datetime
 
 printArt()
-print("Follow the instructions on the other window")
+print("Follow the instructions on the other window\n")
+print("This program requires ChromeDriver to work. You can download it here: https://chromedriver.chromium.org/downloads")
+print("Please make sure you have the right ChromeDriver file in the same directory as WhatsappBroadcaster.exe")
+print("Choose the right version of ChromeDriver according to your computer's Chrome version. You can check your Google Chrome version on the top-right menu > Help > About Google Chrome")
 
 returnValues = runGUI()
 phones = returnValues["phones"].split('\n')
