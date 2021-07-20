@@ -1,5 +1,7 @@
 # whatsapp-broadcaster
 
+![main screen lol](https://i.imgur.com/EN2krD7.jpg)
+
 Mass WhatsApp message broadcaster for a list of phone numbers. Provides interval delay functionality between messages.
 
 ## Requirements
