@@ -46,7 +46,7 @@ def printArt():
     print("")
 
 def printInline(string):
-    print(string, end=" ")
+    print(string, end="")
 
 def printReplace(string):
     print(string, end="\r")
