@@ -4,20 +4,22 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver import ActionChains
 from random import randint
 from tkgui import runGUI
-from utils import RepresentsInt, clearConsole, isValidNumber, stripNonNumeric, printArt
+from utils import RepresentsInt, clearConsole, isValidNumber, stripNonNumeric, printArt, printInline, printReplace
+from colorama import init
+from colorama import Fore, Back, Style
 import tkinter as tk
 import time
 import datetime
 
+init(autoreset=True) # init colorama
 printArt()
-print("Follow the instructions on the other window\n")
-print("This program requires ChromeDriver to work. You can download it here: https://chromedriver.chromium.org/downloads")
-print("Please make sure you have the right ChromeDriver file in the same directory as WhatsappBroadcaster.exe")
-print("Choose the right version of ChromeDriver according to your computer's Chrome version. You can check your Google Chrome version on the top-right menu > Help > About Google Chrome")
+print(Fore.YELLOW + "This program requires ChromeDriver to work.\n"+ Style.RESET_ALL +"You can download it here: {}https://chromedriver.chromium.org/downloads".format(Fore.CYAN))
+print("Choose the right version of ChromeDriver according to your computer's Chrome version.\nYou can check your Google Chrome version by:\n\n  Chrome's top-right menu > Help > About Google Chrome\n")
+print("Please make sure you have the right ChromeDriver file in the same directory as " + Fore.GREEN + "WhatsappBroadcaster.exe")
 
 returnValues = runGUI()
 phones = returnValues["phones"].split('\n')
@@ -36,6 +38,7 @@ browser = webdriver.Chrome()
 browser.set_page_load_timeout(30)
 delay = 40
 whatsappLoadDelay = 30
+chatLoadDelay = 60
 
 clearConsole()
 print("Loading WhatsApp Web..")
@@ -62,29 +65,30 @@ except TimeoutError:
     input("Press Enter to quit")
     quit()
 
-print("Login operation ended in great success!")
+print("Login success!")
 
 time.sleep(1)
-print("Starting broadcasting in 3..")
+printInline("Starting broadcasting in 3..")
 time.sleep(1)
-print("Starting broadcasting in 2..")
+printInline(" 2..")
 time.sleep(1)
-print("Starting broadcasting in 1..")
+print(" 1..")
 time.sleep(1)
 
 success = 0
 fail = 0
 for number in phones:
     phone = stripNonNumeric(number)
+    printInline("> (sending to " + phone + ")")
     if (not isValidNumber(phone)):
-        print("> [!] {} is not a valid phone number, skipping..".format(phone))
+        print("[!] invalid number, skipping..".format(phone))
         fail += 1
     else:
-        print("> sending to " + phone + "...")
+        
         browser.get("https://web.whatsapp.com/send?phone=" + phone + "&text=" + message + "&app_absent=0")
         try:
-            # locate whatsapp web side pane to indicate load completion
-            paneSideElem = WebDriverWait(browser, delay).until(EC.presence_of_element_located((By.XPATH, '//div[@id="pane-side"]')))
+            # locate whatsapp web send button to indicate load completion
+            sentButtonElem = WebDriverWait(browser, chatLoadDelay).until(EC.presence_of_element_located((By.XPATH, '//footer//div//div//div//div//button')))
             time.sleep(1)
             # try to locate send button
             try: 
@@ -109,12 +113,9 @@ for number in phones:
                 pass
             print("> [!] failed to send to {}, skipping..".format(phone))
             fail += 1
-        except TimeoutError:
-            browser.close()
-            print("Loading took too much time!")
-            print("> Broadcasted messages to {} numbers with {} successes and {} fails.".format(len(phones), success, fail))
-            input("Press Enter to quit")
-            quit()
+        except TimeoutException or TimeoutError:
+            print("> [!] Loading took too much time for {}! (waited for {} seconds) Skipping".format(phone, chatLoadDelay))
+            continue
 
 browser.close()
 print("> Finished broadcasting messages to {} numbers with {} successes and {} fails.".format(len(phones), success, fail))

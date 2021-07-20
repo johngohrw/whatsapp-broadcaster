@@ -1,4 +1,6 @@
 import re
+from colorama import init
+from colorama import Fore, Back, Style
 
 def RepresentsInt(s):
     try: 
@@ -39,3 +41,12 @@ def printArt():
     print("██████╦╝██║░░██║╚█████╔╝██║░░██║██████╔╝╚█████╔╝██║░░██║██████╔╝░░░██║░░░")
     print("╚═════╝░╚═╝░░╚═╝░╚════╝░╚═╝░░╚═╝╚═════╝░░╚════╝░╚═╝░░╚═╝╚═════╝░░░░╚═╝░░░")
     print("")
+    print("                             " + Fore.CYAN + "John Rengwu")
+    print("                         "  + Fore.MAGENTA + "https://rengwu.tech")
+    print("")
+
+def printInline(string):
+    print(string, end=" ")
+
+def printReplace(string):
+    print(string, end="\r")
