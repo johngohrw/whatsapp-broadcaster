@@ -118,12 +118,12 @@ if __name__ == "__main__":
             browser.get("https://web.whatsapp.com/send?phone=" + phone + "&text=" + message + "&app_absent=0")
             try:
                 # locate whatsapp web send button to indicate load completion
-                sentButtonElem = WebDriverWait(browser, chatLoadDelay).until(EC.presence_of_element_located((By.XPATH, '//footer//div//div//div//div//button')))
+                sentButtonElem = WebDriverWait(browser, chatLoadDelay).until(EC.presence_of_element_located((By.XPATH, "//span[@data-testid='send']")))
                 time.sleep(1)
                 # try to locate send button
                 try: 
-                    sendButton = browser.find_element_by_xpath('//footer//div//div//div//div//button')
-                    sendButton = WebDriverWait(browser, clickableDelay).until(EC.element_to_be_clickable((By.XPATH, '//footer//div//div//div//div//button')))
+                    sendButton = browser.find_element_by_xpath("//span[@data-testid='send']")
+                    sendButton = WebDriverWait(browser, clickableDelay).until(EC.element_to_be_clickable((By.XPATH, "//span[@data-testid='send']")))
                     sendButton.click()
                     printInline(writeLog(preSendString + Fore.GREEN + " [SUCCESS]\n"))
                     success += 1
