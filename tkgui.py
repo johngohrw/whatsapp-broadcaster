@@ -16,7 +16,6 @@ def runGUI():
     window = tk.Tk()
     window.geometry('{}x{}'.format(width, height))
     window.resizable(False, False) 
-    window.iconbitmap("wa.ico")
     window.title("whatsapp broadcaster")
 
     def handle_click(evt):
